@@ -1,0 +1,57 @@
+name: SemanticRelease
+
+on:
+  workflow_call:
+    inputs:
+      default-branch:
+        default: main
+        type: string
+      develop-branch:
+        default: develop
+        type: string
+      merge-back-to-develop:
+        type: boolean
+        default: false
+
+jobs:
+  Release:
+    name: Release
+    if: "!contains(github.event.head_commit.message, ':bookmark:')"
+    runs-on: ubuntu-latest
+    environment: release
+    permissions:
+      contents: write # to be able to publish a GitHub release
+      issues: write # to be able to comment on released issues
+      pull-requests: write # to be able to comment on released pull requests
+      id-token: write # to enable use of OIDC for npm provenance
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+          token: ${{ secrets.PLATFORM_CORESVCS_GH_PAT }}
+      - name: Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version-file: ".node-version"
+      - name: Use .npmrc
+        uses: bduff9/use-npmrc@v1.2
+        with:
+          dot-npmrc: ${{ secrets.PLATFORM_CORESVCS_SAAS_NPMRC_20 }}
+      - name: Install dependencies
+        run: npm clean-install
+      - name: Set Git config
+        if: ${{inputs.merge-back-to-develop}}
+        run: |
+          git config --local user.email "actions@github.com"
+          git config --local user.name "semantic-release-bot"
+      - name: Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: '21'
+      - name: Install semantic-release with plugins
+        run: npm install semantic-release-gitmoji semantic-release/changelog semantic-release/npm semantic-release/git semantic-release/github
+      - name: Release
+        env:
+          GITHUB_TOKEN: ${{ secrets.PLATFORM_CORESVCS_GH_PAT }}
+        run:  |
+          npx --loglevel verbose semantic-release

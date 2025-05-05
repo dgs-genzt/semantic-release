@@ -1,0 +1,25 @@
+branches:
+  - "main"
+
+tagFormat: "V${version}"
+
+plugins:
+  - - "semantic-release-gitmoji"
+    - releaseRules:
+        major:
+          - ":boom:"
+        minor:
+          - ":sparkles:"
+        patch:
+          - ":bug:"
+          - ":ambulance:"
+          - ":lock:"
+          - ":rocket:"
+          - ":arrow_up:"
+  - "@semantic-release/changelog"
+  - - "@semantic-release/npm"
+    - { "npmPublish": false }
+  - - "@semantic-release/git"
+    - "assets": ["CHANGELOG.md", "package.json", "package-lock.json"]
+      "message": ":bookmark: release ${nextRelease.version}\n\n${nextRelease.notes}"
+  - "@semantic-release/github"

@@ -8,6 +8,15 @@ jobs:
   semantic-release:
     uses: dgs-genzt/semantic-release/.github/workflows/semantic-release.yaml@main
     secrets: inherit
+    permissions:
+      contents: write
+      issues: write
+      attestations: write
+      discussions: write
+      deployments: write
+      pull-requests: write
+      id-token: write
+      packages: write
     with:
-      merge-back-to-develop: true
-      default-branch: master
+      merge-back-to-develop: false
+      default-branch: main

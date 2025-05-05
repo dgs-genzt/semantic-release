@@ -29,22 +29,22 @@ jobs:
         with:
           fetch-depth: 0
           token: ${{ secrets.GH_TOKEN }}
-      # - name: Setup Node.js
+      # - name: Setup Node.js  ## uncomment to setup custom node version 
       #   uses: actions/setup-node@v4
       #   with:
       #     node-version-file: ".node-version"
-      # - name: Use .npmrc
+      # - name: Use .npmrc  ## uncomment when using custom registry
       #   uses: bduff9/use-npmrc@v1.2
       #   with:
       #     dot-npmrc: ${{ secrets.GH_TOKEN }}
-      # - name: Install dependencies
+      # - name: Install dependencies ## uncomment when releaseable repo has package.json
       #   run: npm clean-install 
       - name: Set Git config
         if: ${{inputs.merge-back-to-develop}}
         run: |
           git config --local user.email "actions@github.com"
           git config --local user.name "semantic-release-bot"
-      - name: Setup Node.js
+      - name: Setup Node.js  ## comment to setup custom node version 
         uses: actions/setup-node@v4
         with:
           node-version: '21'

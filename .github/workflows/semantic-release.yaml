@@ -29,16 +29,16 @@ jobs:
         with:
           fetch-depth: 0
           token: ${{ secrets.GH_TOKEN }}
-      - name: Setup Node.js
-        uses: actions/setup-node@v4
-        with:
-          node-version-file: ".node-version"
+      # - name: Setup Node.js
+      #   uses: actions/setup-node@v4
+      #   with:
+      #     node-version-file: ".node-version"
       # - name: Use .npmrc
       #   uses: bduff9/use-npmrc@v1.2
       #   with:
       #     dot-npmrc: ${{ secrets.GH_TOKEN }}
-      - name: Install dependencies
-        run: npm clean-install
+      # - name: Install dependencies
+      #   run: npm clean-install 
       - name: Set Git config
         if: ${{inputs.merge-back-to-develop}}
         run: |

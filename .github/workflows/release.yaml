@@ -6,7 +6,7 @@ on:
 
 jobs:
   semantic-release:
-    uses: dgs-genzt/.github/workflows/semantic-release.yaml@main
+    uses: dgs-genzt/semantic-release/.github/workflows/semantic-release.yaml@main
     secrets: inherit
     with:
       merge-back-to-develop: true

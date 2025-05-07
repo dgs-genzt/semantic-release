@@ -1,0 +1,27 @@
+branches:
+  - "main"
+
+tagFormat: "v${version}"
+
+plugins:
+  - - "semantic-release-gitmoji"
+    - releaseRules:
+        major:
+          - ":boom:"
+        minor:
+          - ":sparkles:"
+        patch:
+          - ":bug:"
+          - ":ambulance:"
+          - ":lock:"
+          - ":rocket:"
+          - ":arrow_up:"
+  - "@semantic-release/changelog"
+  - - "@semantic-release/npm"
+    - { "npmPublish": false }
+  - - "@semantic-release/exec"
+    - verifyReleaseCmd: 'mvn versions:set -DnewVersion="${nextRelease.version}"'
+  - - "@semantic-release/git"
+    - "assets": ["pom.xml", "CHANGELOG.md"]
+      "message": ":bookmark: release ${nextRelease.version}\n\n${nextRelease.notes}"
+  - "@semantic-release/github"

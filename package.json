@@ -1,6 +1,6 @@
 {
     "name": "semantic-release",
-    "version": "1.0.0",
+    "version": "1.0.1",
     "dependencies": {
         "@semantic-release/changelog": "github:semantic-release/changelog",
         "@semantic-release/git": "github:semantic-release/git",
